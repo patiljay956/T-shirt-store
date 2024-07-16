@@ -1,0 +1,58 @@
+openapi: 3.0.0
+info:
+    title: T-shirt Store API
+    description: LCO - a course to create API to create api for T-shirt store
+    version: 1.1.0
+    contact:
+        email: patiljay956@gmai.com
+        url: "https://linkedin.com/in/patiljay965"
+
+# servers:
+#   - url: "https://localhost/api/v1"
+#     description: for local host - secured
+#   - url: "http://localhost/api/v1"
+#     description: for local host - regular
+
+servers:
+    - url: "{protocols}://localhost:3000/api/{version}"
+      description: for local host - secured
+      variables:
+          version:
+              enum:
+                  - v1
+                  - v2
+              default: v1
+          protocols:
+              enum:
+                  - http
+                  - https
+              default: http
+
+components:
+    securitySchemes:
+        cookieAuth:
+            type: apiKey
+            in: cookie
+            name: token
+        BearerAuth:
+            type: http
+            scheme: bearer
+
+paths:
+    /:
+        get:
+            tags:
+                - home
+            summary: return a greet message from home
+            responses:
+                200:
+                    description: all good and success
+                    content:
+                        appication/json:
+                            schema:
+                                type: string
+                                example: "mySting"
+                400:
+                    description: Bad request
+                500:
+                    description: internal Server error
